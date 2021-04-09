@@ -5,7 +5,7 @@ commands:
       - run:
           name: Install dependencies
           command: |
-            npm install
+            npm install --prefix src/
 
 jobs:
   ci-build:
@@ -17,7 +17,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            npm run unit-tests
+            npm run test-unit --prefix src/
   pack:
     docker:
       - image: circleci/node:lts
