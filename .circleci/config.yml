@@ -1,41 +1,14 @@
 version: 2.1
-commands:
-  install_deps:
-    steps:
-      - run:
-          name: Install dependencies
-          command: |
-            npm install --prefix src/
-
 jobs:
-  ci-build:
+  build:
     docker:
       - image: circleci/node:lts
-    steps:
-      - checkout 
-      - install_deps
-      - run:
-          name: run tests
-          command: |
-            npm run test-unit --prefix src/
-  pack:
-    docker:
-      - image: circleci/node:lts
+
     steps:
       - checkout
-      - install_deps
-      - store_artifacts:
-          path: ./
 
 workflows:
-  build-and-packge:
+  version: 2
+  build-test-package:
     jobs:
-      - ci-build
-      - pack:
-          requires:
-            - ci-build
-          filters:
-            branches:
-              only:
-                - master
-            
+      - build 
